@@ -68,37 +68,58 @@ $hotels = [
 </head>
 <body>
 
-    <!-- <ul>
-        <?php foreach($hotels as $hotel){ ?>
-           <li>
-               <?php foreach($hotel as $key => $value){ ?>
-                <div>
-                    <strong><?php echo $key . ": " ?></strong>
-                    <em><?php echo $value ?></em>
-                </div>
-                <?php } ?>
-           </li>
-            
-       <?php } ?> 
 
-    </ul>-->
+ <?php
+        
+        $counter = 1;
+        $parkValue = isSet($_GET["park"]);
+        $votoHotel = $_GET["rating"];
+       
 
+?> 
 
     <div class="wrapper d-flex justify-content-center w-50">
-        <form action="./server.php" method="GET" class="card w-100 p-2">
+        <form action="index.php" method="GET" class="w-100 p-2">
         <div class="form-check d-flex justify-content-evenly w-100">
-            <label class="form-check-label" for="defaultCheck1">
+            <label class="form-check-label" for="park">
                 Parcheggio
             </label> 
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" name="parking">
+            <input class="form-check-input" type="checkbox" id="park" name="park">
         </div>
         <div class="d-flex justify-content-evenly w-100">
-            <label for="vote">Voto</label>
-            <input type="number" name="vote" id="" class="w-25">
+        <label for="rating">Voto</label>
+        <input type="number" name="rating" id="rating" min="1" max="5">
+</select>
         </div>
         <div class="btn-container p-2 d-flex justify-content-center"><button type="submit" class="btn btn-outline-success w-25">Cerca</button></div>
         </form>
     </div>
-    
+  
+
+<?php if($parkValue !== 'on' && empty($votoHotel)){ ?>
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Parking</th>
+      <th scope="col">Vote</th>
+      <th scope="col">Distance to center</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?php foreach($hotels as $hotel){ ?>
+    <tr>
+      <th scope="row"><?php echo $counter++ ?></th>
+      <?php foreach($hotel as $key => $value){ ?>
+      <td><?php echo $value ?></td>
+      <?php } ?>
+    </tr>
+    <?php } ?>
+  </tbody>
+</table>
+<?php } ?>
 </body>
 </html>
