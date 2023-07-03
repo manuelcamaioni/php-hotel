@@ -70,21 +70,20 @@ $hotels = [
 
 
  <?php
-        
         $counter = 1;
-        $parkValue = isSet($_GET["park"]);
-        $votoHotel = $_GET["rating"];
-       
-
+        $parkValue = isSet($_POST["park"]);
+        $votoHotel = $_POST["rating"];
+        var_dump($parkValue);
+        var_dump($votoHotel);
 ?> 
 
     <div class="wrapper d-flex justify-content-center w-50">
-        <form action="index.php" method="GET" class="w-100 p-2">
+        <form action="index.php" method="post" class="w-100 p-2">
         <div class="form-check d-flex justify-content-evenly w-100">
             <label class="form-check-label" for="park">
                 Parcheggio
             </label> 
-            <input class="form-check-input" type="checkbox" id="park" name="park">
+            <input class="form-check-input" type="checkbox" id="park" name="park" value="0">
         </div>
         <div class="d-flex justify-content-evenly w-100">
         <label for="rating">Voto</label>
@@ -96,7 +95,7 @@ $hotels = [
     </div>
   
 
-<?php if($parkValue !== 'on' && empty($votoHotel)){ ?>
+<?php if($parkValue !== true && empty($votoHotel)){ ?>
 <table class="table">
   <thead>
     <tr>
@@ -111,12 +110,96 @@ $hotels = [
   </thead>
   <tbody>
   <?php foreach($hotels as $hotel){ ?>
+
     <tr>
       <th scope="row"><?php echo $counter++ ?></th>
       <?php foreach($hotel as $key => $value){ ?>
       <td><?php echo $value ?></td>
       <?php } ?>
     </tr>
+    <?php } ?>
+  </tbody>
+</table>
+<?php } ?>
+
+<?php if($parkValue === true && !empty($votoHotel)){ ?>
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Parking</th>
+      <th scope="col">Vote</th>
+      <th scope="col">Distance to center</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?php foreach($hotels as $hotel){ ?>
+<?php if($hotel['parking'] === true && $hotel['vote'] == $votoHotel) ?>
+    <tr>
+      <th scope="row"><?php echo $counter++ ?></th>
+      <?php foreach($hotel as $key => $value){ ?>
+      <td><?php echo $value ?></td>
+      <?php } ?>
+    </tr>
+    <?php } ?>
+  </tbody>
+</table>
+<?php } ?>
+
+<?php if($parkValue === true && empty($votoHotel)){ ?>
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Parking</th>
+      <th scope="col">Vote</th>
+      <th scope="col">Distance to center</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  <?php foreach($hotels as $hotel){ ?>
+    <?php if($hotel['parking'] === true){ ?>
+    <tr>
+      <th scope="row"><?php echo $counter++ ?></th>
+      <?php foreach($hotel as $key => $value){ ?>
+      <td><?php echo $value ?></td>
+      <?php } ?>
+    </tr>
+    <?php } ?>
+    <?php } ?>
+  </tbody>
+</table>
+<?php } ?>
+
+<?php if(!empty($votoHotel) && $parkValue === false){ ?>
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Parking</th>
+      <th scope="col">Vote</th>
+      <th scope="col">Distance to center</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  <?php foreach($hotels as $hotel){ ?>
+    <?php if($hotel['vote'] == $votoHotel){ ?>
+    <tr>
+      <th scope="row"><?php echo $counter++ ?></th>
+      <?php foreach($hotel as $key => $value){ ?>
+      <td><?php echo $value ?></td>
+      <?php } ?>
+    </tr>
+    <?php } ?>
     <?php } ?>
   </tbody>
 </table>
